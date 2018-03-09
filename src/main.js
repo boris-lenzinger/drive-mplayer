@@ -28,6 +28,10 @@ var generateHtml = function(message) {
                 <a href="/volume/increase">Plus fort</a><br/>
                 <a href="/volume/decrease">Moins fort</a><br/>
                 <a href="/pause">Pause/Play</a><br/>
+                <a href="/sub_switch">Switch subtitles</a><br/>
+                <a href="/audio_switch">Switch Audio</a><br/>
+                <a href="/get_title">Show the file name</a><br/>
+                <a href="/show_progression">Show the progression of the file</a><br/>
 		<br/>
 		<br/>`;
 	if ( message !== undefined ) {
@@ -92,6 +96,27 @@ app.get('/pause', function(req, res) {
 	fifo.write('pause\n');
 	send(res,"Pause/Restart sent.");
 });
+
+app.get('/sub_switch', function(req, res) {
+	fifo.write('sub_select\n');
+	send(res,"Changing of subtitle sent.");
+});
+
+app.get('/audio_switch', function(req, res) {
+	fifo.write('switch_audio\n');
+	send(res,"Changing of audio channel sent.");
+});
+
+app.get('/get_title', function(req, res) {
+	fifo.write('get_file_name\n');
+	send(res,"Show the filename.");
+});
+
+app.get('/show_progression', function(req, res) {
+	fifo.write('osd_show_progression\n');
+	send(res,"Show the progression of the file.");
+});
+
 
 app.listen(1337);
 console.log("Serveur lancé sur le port 1337.");
